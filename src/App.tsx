@@ -1,24 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
 
+
+
+
 function App() {
+  const url = "https://jsonplaceholder.typicode.com/users";
+  const [data, setData] = useState([])
+
+
+  const touchh = () => {
+      return fetch(url).then((response) => response.json()).then((data) => setData(data))
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>using JavaScript inbuilt FETCH API</h1>
+      <center>
+        <div>
+          <button onClick={touchh} style={{ fontSize: 20, color: 'black' }}>Get Users Data</button>
+          {(data as any[]).map((user: any) => (
+           <h2 key={user.id}>{user.name}</h2>
+          ))}
+        </div>
+      </center>
     </div>
   );
 }
